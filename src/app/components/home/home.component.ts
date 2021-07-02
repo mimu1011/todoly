@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   add() {
     if (!this.todoInput.value) return;
 
-    this.todos.push({
+    this.todos.unshift({
       text: this.todoInput.value,
       createdAt: new Date(),
     });
