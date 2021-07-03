@@ -48,22 +48,34 @@
       "
     >
       <ul class="divide-y divide-gray-100">
-        <li *ngFor="let todo of todos$ | async" class="p-2 flex flex-row">
-          <span [ngClass]="{ 'line-through text-gray-500': todo.completed }">
-            {{ todo.text }}
-          </span>
-          <button
-            class="bg-white p-2 pl-0 rounded-r leading-none outline-none"
-            (click)="changeCompleted(todo)"
-          >
-            <span class="material-icons-round text-sm"> done </span>
-          </button>
-          <button
-            class="bg-white p-2 pl-0 rounded-r leading-none outline-none"
-            (click)="delete(todo)"
-          >
-            <span class="material-icons-round text-sm"> delete </span>
-          </button>
+        <li
+          *ngFor="let todo of todos$ | async"
+          class="p-2 flex flex-row justify-between items-center"
+        >
+          <div class="flex flex-col">
+            <span
+              class="text-xl"
+              [ngClass]="{ 'line-through text-gray-500': todo.completed }"
+              >{{ todo.text }}</span
+            >
+            <span class="text-xs text-gray-400">{{
+              todo.createdAt | date: "dd.MMM hh:mm a"
+            }}</span>
+          </div>
+          <div>
+            <button
+              class="bg-white p-2 pl-0 rounded-r leading-none outline-none"
+              (click)="changeCompleted(todo)"
+            >
+              <span class="material-icons-round text-sm"> done </span>
+            </button>
+            <button
+              class="bg-white p-2 pl-0 rounded-r leading-none outline-none"
+              (click)="delete(todo)"
+            >
+              <span class="material-icons-round text-sm"> delete </span>
+            </button>
+          </div>
         </li>
       </ul>
     </section>
