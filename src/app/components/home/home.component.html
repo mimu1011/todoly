@@ -30,7 +30,7 @@
       />
       <button
         class="bg-white p-2 pl-0 rounded-r leading-none outline-none"
-        (click)="add()"
+        (click)="save()"
       >
         <span class="material-icons-round text-sm"> add_task </span>
       </button>
@@ -48,8 +48,22 @@
       "
     >
       <ul class="divide-y divide-gray-100">
-        <li *ngFor="let todo of todos" class="p-2">
-          {{ todo.text }}
+        <li *ngFor="let todo of todos$ | async" class="p-2 flex flex-row">
+          <span [ngClass]="{ 'line-through text-gray-500': todo.completed }">
+            {{ todo.text }}
+          </span>
+          <button
+            class="bg-white p-2 pl-0 rounded-r leading-none outline-none"
+            (click)="changeCompleted(todo)"
+          >
+            <span class="material-icons-round text-sm"> done </span>
+          </button>
+          <button
+            class="bg-white p-2 pl-0 rounded-r leading-none outline-none"
+            (click)="delete(todo)"
+          >
+            <span class="material-icons-round text-sm"> delete </span>
+          </button>
         </li>
       </ul>
     </section>
