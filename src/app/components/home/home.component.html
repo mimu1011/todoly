@@ -6,8 +6,7 @@
         w-1/3
         md:w-1/2
         mb-2
-        flex
-        row
+        flex flex-row
         bg-white
         border-1 border-gray-500
         rounded
@@ -35,49 +34,32 @@
         <span class="material-icons-round text-sm"> add_task </span>
       </button>
     </div>
+    <div class="w-1/2 flex justify-end">
+      <button (click)="isListView = !isListView">
+        <span *ngIf="isListView" class="material-icons-round text-sm">
+          dashboard
+        </span>
+        <span *ngIf="!isListView" class="material-icons-round text-sm">
+          view_agenda
+        </span>
+      </button>
+    </div>
+    <ng-container *ngIf="isListView; else cardView">
+      <app-list-view
+        class="w-1/3 md:w-1/2 h-auto max-h-1/2"
+        [todos$]="todos$"
+        (delete)="delete($event)"
+        (complete)="changeCompleted($event)"
+      ></app-list-view>
+    </ng-container>
 
-    <section
-      class="
-        w-1/3
-        md:w-1/2
-        bg-white
-        h-1/2
-        rounded
-        shadow-sm
-        overflow-x-hidden overflow-y-auto
-      "
-    >
-      <ul class="divide-y divide-gray-100">
-        <li
-          *ngFor="let todo of todos$ | async"
-          class="p-2 flex flex-row justify-between items-center"
-        >
-          <div class="flex flex-col">
-            <span
-              class="text-xl"
-              [ngClass]="{ 'line-through text-gray-500': todo.completed }"
-              >{{ todo.text }}</span
-            >
-            <span class="text-xs text-gray-400">{{
-              todo.createdAt | date: "dd.MMM hh:mm a"
-            }}</span>
-          </div>
-          <div>
-            <button
-              class="bg-white p-2 pl-0 rounded-r leading-none outline-none"
-              (click)="changeCompleted(todo)"
-            >
-              <span class="material-icons-round text-sm"> done </span>
-            </button>
-            <button
-              class="bg-white p-2 pl-0 rounded-r leading-none outline-none"
-              (click)="delete(todo)"
-            >
-              <span class="material-icons-round text-sm"> delete </span>
-            </button>
-          </div>
-        </li>
-      </ul>
-    </section>
+    <ng-template #cardView>
+      <app-card-view
+        class="w-1/3 md:w-1/2 h-auto max-h-1/2"
+        [todos$]="todos$"
+        (delete)="delete($event)"
+        (complete)="changeCompleted($event)"
+      ></app-card-view>
+    </ng-template>
   </div>
 </div>

@@ -10,9 +10,11 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  todos$!: Observable<Todo[]>;
+  todos$: Observable<Todo[]>;
   todoInput = new FormControl('');
 
+  isListView = false;
+  
   constructor(private storageService: StorageService) {}
 
   ngOnInit(): void {
