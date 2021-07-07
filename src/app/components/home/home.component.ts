@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Todo } from 'src/app/models/todo';
 import { StorageService } from 'src/app/services/storage.service';
 
@@ -9,16 +9,21 @@ import { StorageService } from 'src/app/services/storage.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
-  todos$: Observable<Todo[]>;
+export class HomeComponent implements OnInit, OnDestroy {
+  todosSubscription: Subscription;
   todoInput = new FormControl('');
+  todos: Todo[] = [];
 
   isListView = false;
-  
+
   constructor(private storageService: StorageService) {}
 
   ngOnInit(): void {
-    this.todos$ = this.storageService.todos$;
+    this.todosSubscription = this.storageService.todos$.subscribe((todos) => (this.todos = todos));
+  }
+
+  ngOnDestroy(): void {
+    this.todosSubscription?.unsubscribe();
   }
 
   save() {

@@ -1,30 +1,14 @@
-<div class="flex flex-row flex-wrap">
-  <div
-    class="
-      p-2
-      mr-2
-      mb-2
-      bg-white
-      h-52
-      w-52
-      shadow-sm
-      rounded
-      flex flex-col
-      justify-between
-    "
-    *ngFor="let todo of todos$ | async"
-  >
-    <span
-      class="text-xl break-words"
-      [ngClass]="{ 'line-through text-gray-500': todo.completed }"
-      >{{ todo.text }}</span
-    >
+<div class="col-count-3 col-gap-2">
+  <div class="inline-block w-full p-2 mb-2 bg-white h-auto shadow-sm rounded" *ngFor="let todo of todos">
+    <span class="text-xl break-words" [ngClass]="{ 'line-through text-gray-500': todo.completed }">
+      {{ todo.text }}
+    </span>
     <div class="flex flex-row justify-between items-center">
       <div class="text-xs text-gray-400">
-        {{ todo.createdAt | date: "dd.MMM hh:mm a" }}
+        {{ todo.createdAt | date: 'dd.MMM hh:mm a' }}
       </div>
       <div>
-        <button (click)="complete.emit(todo)">
+        <button (click)="completed.emit(todo)">
           <span class="material-icons-round text-sm"> done </span>
         </button>
         <button class="pl-2" (click)="delete.emit(todo)">
