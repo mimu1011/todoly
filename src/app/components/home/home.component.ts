@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { Todo } from 'src/app/models/todo';
 import { StorageService } from 'src/app/services/storage.service';
 
@@ -10,20 +10,28 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  @ViewChild('stickyHeader') stickyHeaderRef: ElementRef;
+  scrollEventSubscription: Subscription;
   todosSubscription: Subscription;
+
   todoInput = new FormControl('');
+
   todos: Todo[] = [];
 
   isListView = false;
+  isSticky = false;
 
   constructor(private storageService: StorageService) {}
 
   ngOnInit(): void {
     this.todosSubscription = this.storageService.todos$.subscribe((todos) => (this.todos = todos));
+
+    this.scrollEventSubscription = fromEvent(window, 'scroll').subscribe((_) => this.checkIsSticky());
   }
 
   ngOnDestroy(): void {
     this.todosSubscription?.unsubscribe();
+    this.scrollEventSubscription?.unsubscribe();
   }
 
   save() {
@@ -40,5 +48,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   delete(todo: Todo) {
     this.storageService.delete(todo.id);
+  }
+
+  private checkIsSticky() {
+    const topPosition = this.stickyHeaderRef.nativeElement.getBoundingClientRect().top;
+
+    if (topPosition < 10) {
+      this.isSticky = true;
+    } else {
+      this.isSticky = false;
+    }
   }
 }
