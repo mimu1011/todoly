@@ -31,9 +31,7 @@ export class StorageService {
   }
 
   delete(id: string): void {
-    const todos = this.todosSubject$
-      .getValue()
-      .filter((item) => item.id !== id);
+    const todos = this.todosSubject$.getValue().filter((item) => item.id !== id);
 
     this.saveTodosToLocalStorage(todos);
     this.todosSubject$.next(todos);
@@ -52,11 +50,25 @@ export class StorageService {
     this.todosSubject$.next(todos);
   }
 
+  changeColor(id: string, color: string): void {
+    const todos = this.todosSubject$.getValue();
+
+    const toColorChange = todos.find((item) => item.id === id);
+
+    if (!toColorChange) return;
+
+    toColorChange.color = color;
+
+    this.saveTodosToLocalStorage(todos);
+    this.todosSubject$.next(todos);
+  }
+
   private createTodo(text: string): Todo {
     return <Todo>{
       id: uuid4(),
       text: text,
       createdAt: new Date(),
+      color: '#FFFFFF'
     };
   }
 

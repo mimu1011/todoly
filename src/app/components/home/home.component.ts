@@ -50,6 +50,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.storageService.delete(todo.id);
   }
 
+  saveColor(todo: Todo) {
+    this.storageService.changeColor(todo.id, todo.color);
+  }
+
+
   private checkIsSticky() {
     const topPosition = this.stickyHeaderRef.nativeElement.getBoundingClientRect().top;
 

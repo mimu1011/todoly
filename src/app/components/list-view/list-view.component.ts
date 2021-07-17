@@ -9,8 +9,14 @@ import { Todo } from '../../models/todo';
 export class ListViewComponent {
   @Input() todos: Todo[];
 
-  @Output() delete: EventEmitter<Todo> = new EventEmitter();
-  @Output() completed: EventEmitter<Todo> = new EventEmitter();
+  @Output() delete: EventEmitter<Todo> = new EventEmitter<Todo>();
+  @Output() completed: EventEmitter<Todo> = new EventEmitter<Todo>();
+  @Output() colorChanged: EventEmitter<Todo> = new EventEmitter<Todo>();
 
   constructor() {}
+
+  emitColorChange(todo: Todo, color: string) {
+    todo.color = color;
+    this.colorChanged.emit(todo);
+  }
 }

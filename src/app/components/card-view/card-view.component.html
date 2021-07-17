@@ -1,5 +1,9 @@
 <div class="col-count-3 col-gap-2">
-  <div class="inline-block w-full p-2 mb-2 bg-white h-auto shadow-sm rounded" *ngFor="let todo of todos">
+  <div
+    class="inline-block w-full p-2 mb-2 h-auto shadow-sm rounded"
+    *ngFor="let todo of todos"
+    [style.background-color]="todo.color"
+  >
     <span class="text-xl break-words" [ngClass]="{ 'line-through text-gray-500': todo.completed }">
       {{ todo.text }}
     </span>
@@ -8,6 +12,7 @@
         {{ todo.createdAt | date: 'dd.MMM hh:mm a' }}
       </div>
       <div>
+        <app-color-picker (pickedColor)="emitColorChange(todo, $event)"></app-color-picker>
         <button (click)="completed.emit(todo)">
           <span class="material-icons-round text-sm"> done </span>
         </button>

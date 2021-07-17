@@ -21,11 +21,21 @@
     </div>
 
     <ng-container *ngIf="isListView; else cardView">
-      <app-list-view [todos]="todos" (delete)="delete($event)" (completed)="changeCompleted($event)"></app-list-view>
+      <app-list-view
+        [todos]="todos"
+        (delete)="delete($event)"
+        (completed)="changeCompleted($event)"
+        (colorChanged)="saveColor($event)"
+      ></app-list-view>
     </ng-container>
 
     <ng-template #cardView>
-      <app-card-view [todos]="todos" (delete)="delete($event)" (completed)="changeCompleted($event)"></app-card-view>
+      <app-card-view
+        [todos]="todos"
+        (delete)="delete($event)"
+        (completed)="changeCompleted($event)"
+        (colorChanged)="saveColor($event)"
+      ></app-card-view>
     </ng-template>
   </div>
 </div>
