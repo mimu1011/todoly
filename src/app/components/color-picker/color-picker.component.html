@@ -2,22 +2,17 @@
   <span class="material-icons-round text-sm"> palette </span>
 </button>
 
-<div *ngIf="isActive" class="flex flex-col p-2 absolute h-auto w-52 bg-white shadow-md">
-  <div class="flex flex-row justify-between border-b border-gray-300">
-    <h1 class="uppercase text-base">Choose a color</h1>
-    <button (click)="closeColorPicker()">
-      <span class="material-icons-round text-sm"> close </span>
-    </button>
-  </div>
-
-  <div>
-    <div class="flex flex-row flex-wrap justify-start">
-      <span
-        *ngFor="let color of colors"
-        class="rounded-full h-12 w-12 m-2 cursor-pointer border border-gray-300"
-        [style.background-color]="color"
-        (click)="pick(color)"
-      ></span>
-    </div>
+<div *ngIf="isActive" class="absolute h-auto w-36 bg-white shadow-md rounded">
+  <div class="flex flex-row flex-wrap justify-start">
+    <span
+      *ngFor="let color of colors"
+      class="rounded-full h-5 w-5 m-1 cursor-pointer border border-gray-300 hover:border-gray-800"
+      [style.background-color]="color"
+      (click)="pick(color)"
+    >
+      <span *ngIf="selectedColor === color" class="material-icons-round leading-none text-base text-black opacity-60">
+        done
+      </span>
+    </span>
   </div>
 </div>

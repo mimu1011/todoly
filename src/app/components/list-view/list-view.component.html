@@ -13,7 +13,10 @@
           {{ todo.createdAt | date: 'dd.MMM hh:mm a' }}
         </div>
         <div>
-          <app-color-picker (pickedColor)="emitColorChange(todo, $event)"></app-color-picker>
+          <app-color-picker
+            (pickedColor)="emitColorChange(todo, $event)"
+            [selectedColor]="todo.color"
+          ></app-color-picker>
 
           <button (click)="completed.emit(todo)">
             <span class="material-icons-round text-sm"> done </span>

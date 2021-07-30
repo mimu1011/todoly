@@ -1,16 +1,32 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-color-picker',
   templateUrl: './color-picker.component.html',
 })
 export class ColorPickerComponent {
-  isActive = false;
-
-  colors = ['#D32F2F', '#0288D1', '#00796B', '#689F38', '#AFB42B', '#FFA000', '#FFFFFF'];
+  
+  @Input()
+  selectedColor: string;
 
   @Output()
   pickedColor: EventEmitter<string> = new EventEmitter();
+
+  isActive = false;
+  colors = [
+    '#fff',
+    '#a7ffeb',
+    '#f28b82',
+    '#fbbc04',
+    '#fff475',
+    '#ccff90',
+    '#cbf0f8',
+    '#aecbfa',
+    '#d7aefb',
+    '#fdcfe8',
+    '#e6c9a8',
+    '#e8eaed',
+  ];
 
   constructor() {}
 
