@@ -1,4 +1,8 @@
-<ul class="divide-y divide-gray-100 rounded shadow-sm overflow-x-hidden overflow-y-auto">
+<ul
+  class="divide-y divide-gray-100 rounded shadow-sm overflow-x-hidden overflow-y-auto"
+  (mouseenter)="hovered = true"
+  (mouseleave)="hovered = false"
+>
   <li
     *ngFor="let todo of todos"
     class="p-2 flex flex-row justify-between items-center"
@@ -8,7 +12,7 @@
       <span class="text-xl break-words break-all" [ngClass]="{ 'line-through text-gray-500': todo.completed }">
         {{ todo.text }}
       </span>
-      <div class="flex flex-row justify-between items-center">
+      <div [style.visibility]="hovered ? 'visible' : 'hidden'" class="flex flex-row justify-between items-center">
         <div class="text-xs text-gray-400">
           {{ todo.createdAt | date: 'dd.MMM hh:mm a' }}
         </div>
@@ -18,7 +22,7 @@
             [selectedColor]="todo.color"
           ></app-color-picker>
 
-          <button (click)="completed.emit(todo)">
+          <button class="pl-2" (click)="completed.emit(todo)">
             <span class="material-icons-round text-sm"> done </span>
           </button>
           <button class="pl-2" (click)="delete.emit(todo)">

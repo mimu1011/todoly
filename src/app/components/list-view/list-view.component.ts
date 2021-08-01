@@ -13,6 +13,8 @@ export class ListViewComponent {
   @Output() completed: EventEmitter<Todo> = new EventEmitter<Todo>();
   @Output() colorChanged: EventEmitter<Todo> = new EventEmitter<Todo>();
 
+  hovered = false;
+
   constructor() {}
 
   emitColorChange(todo: Todo, color: string) {

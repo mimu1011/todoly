@@ -1,4 +1,4 @@
-<div class="col-count-3 col-gap-2">
+<div class="col-count-3 col-gap-2" (mouseenter)="hovered = true" (mouseleave)="hovered = false">
   <div
     class="inline-block w-full p-2 mb-2 h-auto shadow-sm rounded"
     *ngFor="let todo of todos"
@@ -7,13 +7,13 @@
     <span class="text-xl break-words" [ngClass]="{ 'line-through text-gray-500': todo.completed }">
       {{ todo.text }}
     </span>
-    <div class="flex flex-row justify-between items-center">
+    <div class="flex flex-row justify-between items-center" [style.visibility]="hovered ? 'visible' : 'hidden'">
       <div class="text-xs text-gray-400">
         {{ todo.createdAt | date: 'dd.MMM hh:mm a' }}
       </div>
       <div>
         <app-color-picker (pickedColor)="emitColorChange(todo, $event)" [selectedColor]="todo.color"></app-color-picker>
-        <button (click)="completed.emit(todo)">
+        <button class="pl-2" (click)="completed.emit(todo)">
           <span class="material-icons-round text-sm"> done </span>
         </button>
         <button class="pl-2" (click)="delete.emit(todo)">
